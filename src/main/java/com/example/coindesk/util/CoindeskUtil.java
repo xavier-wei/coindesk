@@ -1,15 +1,23 @@
 package com.example.coindesk.util;
 
+import com.example.coindesk.service.CoinConfigService;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
+@Component
 public class CoindeskUtil {
+
+
+    @Autowired
+    private CoinConfigService coinConfigService;
 
     /**
      * JSON 字符串解析為 CoindeskResponse
@@ -24,19 +32,6 @@ public class CoindeskUtil {
             return mapper.readValue(json, CoindeskResponse.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to parse JSON", e);
-        }
-    }
-
-    public static String getCurrencyNameInChinese(String code) {
-        switch (code) {
-            case "USD":
-                return "美元";
-            case "GBP":
-                return "英鎊";
-            case "EUR":
-                return "歐元";
-            default:
-                return "未知";
         }
     }
 

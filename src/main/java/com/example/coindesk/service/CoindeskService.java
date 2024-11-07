@@ -2,6 +2,7 @@ package com.example.coindesk.service;
 
 
 import com.example.coindesk.util.CoindeskUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,10 @@ import java.util.Map;
 
 @Service
 public class CoindeskService {
+
+
+    @Autowired
+    private CoinConfigService coinConfigService;
 
 
     // 取得 Coindesk 原始 JSON 資料
@@ -54,7 +59,7 @@ public class CoindeskService {
         coindeskResponse.getBpi().forEach((currencyCode, bpi) -> {
             Map<String, Object> currencyData = new HashMap<>();
             currencyData.put("currencyCode", bpi.getCode());
-            currencyData.put("currencyName", CoindeskUtil.getCurrencyNameInChinese(bpi.getCode()));
+            currencyData.put("currencyName", coinConfigService.getCurrencyNameInChinese(bpi.getCode()));
             currencyData.put("rateFloat", bpi.getRateFloat());
             currencyInfo.put(currencyCode, currencyData);
         });

@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS coin_type;
+DROP TABLE IF EXISTS coin_config;
+
 CREATE TABLE coin_type
 (
     code           VARCHAR(5) NOT NULL PRIMARY KEY, -- 幣別代碼，例如 USD
@@ -10,4 +12,10 @@ CREATE TABLE coin_type
     update_time    DATETIME DEFAULT NOW()           -- 更新時間
 );
 
-
+DROP TABLE IF EXISTS coin_config;
+CREATE TABLE coin_config (
+                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                             description_en VARCHAR(100),
+                             description_ch VARCHAR(100),
+                             update_time TIMESTAMP
+);
